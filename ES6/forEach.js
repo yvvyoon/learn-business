@@ -21,7 +21,11 @@ function forEach(arr, callback) {
 // forEach(colors, e => console.log(e));
 
 // Exercise #2
-const images = [{ h: 10, w: 20 }, { h: 5, w: 5 }, { h: 20, w: 30 }];
+const images = [
+    { h: 10, w: 20 }, 
+    { h: 5, w: 5 }, 
+    { h: 20, w: 30 }
+];
 const area = [];
 
 images.forEach(element => {

@@ -26,7 +26,9 @@ const heights = images.map(element => element.h);
 const result = pluck(images, 'h');
 
 function pluck(arr, key) {
-    return arr.map(element => element[key]);
+	// element => element.key라고 사용하면 안되는 이유
+	// element.'h'로 인식하기 때문에 syntax 에러가 뜬다.
+	return arr.map(element => element[key]);
 }
 
 console.log(result);
