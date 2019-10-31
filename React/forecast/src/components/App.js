@@ -11,6 +11,7 @@ const App = () => {
 	const APPID = '00d697c5fe1c098a9832ae421bc90989';
 	const [current, setCurrent] = useState(null);
 	const [forecast, setForecast] = useState(null);
+	const [unit, setUnit] = useState('c');
 
 	const getLocation = () => {
 		return new Promise((resolve, reject) => {
@@ -21,14 +22,23 @@ const App = () => {
 	const getTemp = async coords => {
 		// : 뒤에 별칭 사용 가능
 		const { latitude: lat, longitude: lon } = coords;
-		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${APPID}`;
+		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${APPID}&units=metric&lang=kr`;
 		const res = await Axios.get(url);
 		const { data } = res;
 
 		setCurrent(data);
+		console.log(data);
 	};
 
-	const getHourlyTemp = async coords => {};
+	const getHourlyTemp = async coords => {
+		const { latitude: lat, longitude: lon } = coords;
+		const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=${APPID}&units=metric&lang=kr`;
+		const res = await Axios.get(url);
+		const { data } = res;
+
+		setForecast(data);
+		console.log(data);
+	};
 
 	const getAll = async () => {
 		try {
@@ -68,9 +78,20 @@ const App = () => {
 				<h1>일기예보</h1>
 			</header>
 			<main className="container">
-				{!current ? <Spinner /> : <Current current={current} />}
-
-				<Forecast />
+				{!current || !forecast ? (
+					<Spinner />
+				) : (
+					// 모든 조건문 로직에서는 한 컴포넌트만 써야 함
+					<>
+						<Current
+							current={current}
+							unit={unit}
+							setUnit={setUnit}
+						/>
+						,
+						<Forecast forecast={forecast} unit={unit} />
+					</>
+				)}
 			</main>
 		</>
 	);
