@@ -88,7 +88,6 @@ const App = () => {
 							unit={unit}
 							setUnit={setUnit}
 						/>
-						,
 						<Forecast forecast={forecast} unit={unit} />
 					</>
 				)}
