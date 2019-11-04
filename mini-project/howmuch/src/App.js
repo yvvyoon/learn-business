@@ -21,7 +21,7 @@ export default class App extends React.Component {
 	};
 
 	async componentDidMount() {
-		await setInterval(() => {
+		setInterval(() => {
 			this.getMarkets();
 		}, 1000);
 
@@ -39,14 +39,14 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<h1>How Much?</h1>
+				<h1>진짜 제 돈이 아니어서 그래요 :(</h1>
 				<table className="table">
 					<thead>
-						<tr className="tr">
-							<td className="td">이름</td>
-							<td className="td">가격</td>
-							<td className="td">24시간 변동가</td>
-							<td className="td">24시간 변동률</td>
+						<tr className="tr-title">
+							<td className="td-title">종목</td>
+							<td className="td-title">가격</td>
+							<td className="td-title">전일 대비(원)</td>
+							<td className="td-title">전일 대비(%)</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,9 +56,10 @@ export default class App extends React.Component {
 									{this.state.markets[key].acc_trade_value ==
 									0 ? null : (
 										<tr className="tr">
-											<td className="td">{key}</td>
-											<td className="td">
-												￦&nbsp;
+											<td className="td" id="name">
+												{key}
+											</td>
+											<td className="td" id="price">
 												{Math.round(
 													this.state.markets[key]
 														.acc_trade_value /
@@ -70,6 +71,7 @@ export default class App extends React.Component {
 														/\B(?=(\d{3})+(?!\d))/g,
 														',',
 													)}
+												&nbsp;원
 											</td>
 											<td
 												className={
@@ -78,12 +80,13 @@ export default class App extends React.Component {
 														? 'price-down td'
 														: 'price-up td'
 												}
+												id="change"
 											>
-												￦&nbsp;
 												{
 													this.state.markets[key]
 														.fluctate_24H
 												}
+												&nbsp;원
 											</td>
 											<td
 												className={
@@ -92,6 +95,7 @@ export default class App extends React.Component {
 														? 'price-down td'
 														: 'price-up td'
 												}
+												id="rate"
 											>
 												{
 													this.state.markets[key]
