@@ -18,6 +18,8 @@ export default class App extends React.Component {
 			// data를 한번 더 써줘야 함
 			markets: markets.data.data,
 		});
+
+		console.log(markets);
 	};
 
 	async componentDidMount() {
@@ -28,8 +30,9 @@ export default class App extends React.Component {
 		Object.keys(this.state.markets).forEach(key => {
 			const symbol = key;
 			const price = Math.round(
-				this.state.markets[key].acc_trade_value /
-					this.state.markets[key].units_traded,
+				this.state.markets[key].closing_price,
+				// this.state.markets[key].acc_trade_value /
+				// 	this.state.markets[key].units_traded,
 			);
 
 			console.log(`${symbol} => ${price}`);
@@ -62,9 +65,7 @@ export default class App extends React.Component {
 											<td className="td" id="price">
 												{Math.round(
 													this.state.markets[key]
-														.acc_trade_value /
-														this.state.markets[key]
-															.units_traded,
+														.closing_price,
 												)
 													.toString()
 													.replace(
